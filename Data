@@ -1,0 +1,13 @@
+# Dataset
+
+This project uses the Kaggle Food Demand Forecasting dataset.
+
+Required files:
+
+- `train.csv`
+- `meal_info.csv`
+- `fulfilment_center_info.csv`
+
+Download the dataset from Kaggle and place the CSV files in this directory before running the notebook.
+
+The raw dataset is not included in this repository.
