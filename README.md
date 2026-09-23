@@ -8,6 +8,8 @@ The Streamlit app turns the notebook's finalized modeling pipeline into an inter
 
 **Meal + Fulfilment Center + Price + Promotions → Demand Forecast → Constrained Price Recommendation → What-if Revenue Simulation**
 
+**Live Demo:** [https://retail-demand-dynamic-pricing.streamlit.app](https://retail-demand-dynamic-pricing.streamlit.app)
+
 ### Run locally
 
 ```bash
@@ -21,26 +23,26 @@ The required model, pricing parameters, metadata, and compact demo reference dat
 
 `retail_demand_dynamic_pricing.ipynb` contains the full analysis and model-development workflow, including:
 
-- Data validation and exploratory analysis
-- Lag and rolling demand features
-- Time-based train/validation/test design
-- XGBoost demand forecasting
-- Naive and Ridge baselines
-- Controlled log-log price elasticity
-- Historical price constraints
-- ±20% business price-change constraint
-- Holdout pricing scenario evaluation
+* Data validation and exploratory analysis
+* Lag and rolling demand features
+* Time-based train/validation/test design
+* XGBoost demand forecasting
+* Naive and Ridge baselines
+* Controlled log-log price elasticity
+* Historical price constraints
+* ±20% business price-change constraint
+* Holdout pricing scenario evaluation
 
 ## Key Results
 
-| Metric | Result |
-|---|---:|
-| XGBoost MAE | 77.4 orders |
-| Naive baseline MAE | 99.1 orders |
-| Ridge baseline MAE | 113.3 orders |
-| XGBoost improvement vs naive | 21.9% |
-| XGBoost improvement vs Ridge | 31.7% |
-| Notebook pricing scenario improvement | 10.14% |
+| Metric                                |       Result |
+| ------------------------------------- | -----------: |
+| XGBoost MAE                           |  77.4 orders |
+| Naive baseline MAE                    |  99.1 orders |
+| Ridge baseline MAE                    | 113.3 orders |
+| XGBoost improvement vs naive          |        21.9% |
+| XGBoost improvement vs Ridge          |        31.7% |
+| Notebook pricing scenario improvement |       10.14% |
 
 The pricing percentage is a **model-based holdout scenario estimate**, not a guaranteed causal revenue increase.
 
