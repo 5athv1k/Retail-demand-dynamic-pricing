@@ -1,0 +1,32 @@
+{
+  "project_title": "Retail Demand Forecasting & Dynamic Pricing Optimization",
+  "source_notebook": "retail_demand_dynamic_pricing.ipynb",
+  "model_provenance": {
+    "algorithm": "XGBoost regression on log1p demand",
+    "validation_selected_trees": 205,
+    "forecast_training_weeks": "3-108",
+    "final_test_weeks": "126-145",
+    "feature_count": 13,
+    "artifact_boosting_rounds": 205,
+    "benchmark_note": "Notebook benchmark metrics are from the validation-selected test evaluation; the saved demo artifact is packaged for interactive inference and has been sanity-checked separately."
+  },
+  "performance": {
+    "notebook_xgboost_mae": 77.4,
+    "notebook_xgboost_rmse": 179.0,
+    "naive_mae": 99.1,
+    "ridge_mae": 113.3,
+    "xgb_improvement_vs_naive_mae_pct": 21.9,
+    "xgb_improvement_vs_ridge_mae_pct": 31.7,
+    "notebook_pricing_holdout_revenue_improvement_pct": 10.14,
+    "demo_artifact_qa_mae": 76.78021240234375,
+    "demo_artifact_qa_rmse": 178.46450649393844
+  },
+  "pricing_provenance": {
+    "elasticity_method": "Controlled log-log regression with meal and center fixed effects plus promotion indicators",
+    "parameter_source": "Exported from finalized notebook results",
+    "business_constraint_pct": 20,
+    "historical_price_bounds_used": true
+  },
+  "latest_historical_week": 145,
+  "demo_artifact_note": "The interactive artifact uses the finalized 205 boosting rounds and the same 13-feature schema as the notebook. The notebook-reported metrics are the primary benchmark; artifact QA metrics are a separate sanity check and are not presented as the notebook evaluation."
+}

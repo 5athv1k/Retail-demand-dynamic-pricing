@@ -1,0 +1,7 @@
+{
+  "artifact_mae": 76.78021240234375,
+  "artifact_rmse": 178.46450649393844,
+  "notebook_reported_mae": 77.4,
+  "notebook_reported_rmse": 179.0,
+  "best_trees": 205
+}
