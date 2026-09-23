@@ -1,166 +1,88 @@
 # Retail Demand Forecasting & Dynamic Pricing Optimization
 
-An end-to-end data science project that combines demand forecasting, price elasticity analysis, and constrained dynamic pricing optimization to support revenue-focused retail decision making.
+An end-to-end data science project combining demand forecasting, controlled price-elasticity analysis, and constrained pricing optimization, with an interactive Streamlit demonstration.
 
-## 📌 Project Overview
+## Working Demo
 
-Retail businesses need to answer two important questions:
+The Streamlit app turns the notebook's finalized modeling pipeline into an interactive working demonstration:
 
-1. How much demand should we expect in the future?
-2. What price is likely to maximize revenue without making unrealistic pricing changes?
+**Meal + Fulfilment Center + Price + Promotions → Demand Forecast → Constrained Price Recommendation → What-if Revenue Simulation**
 
-This project builds a complete analytics pipeline to address both problems using historical food-ordering data.
+### Run locally
 
-## 🎯 Objectives
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
 
-- Forecast future demand using machine learning
-- Benchmark the forecasting model against naive and linear baselines
-- Estimate price sensitivity using controlled elasticity analysis
-- Identify revenue-maximizing price scenarios
-- Apply realistic ±20% pricing constraints
-- Evaluate pricing scenarios on a historical holdout period
+The required model, pricing parameters, metadata, and compact demo reference data are included in the repository. You do **not** need the full raw dataset just to run the demo.
 
-## 📊 Dataset
+## Project Notebook
 
-**Food Demand Forecasting Dataset — Kaggle**
+`retail_demand_dynamic_pricing.ipynb` contains the full analysis and model-development workflow, including:
 
-The project uses:
+- Data validation and exploratory analysis
+- Lag and rolling demand features
+- Time-based train/validation/test design
+- XGBoost demand forecasting
+- Naive and Ridge baselines
+- Controlled log-log price elasticity
+- Historical price constraints
+- ±20% business price-change constraint
+- Holdout pricing scenario evaluation
 
-- `train.csv`
-- `meal_info.csv`
-- `fulfilment_center_info.csv`
+## Key Results
 
-The data contains historical demand, meal information, fulfilment-center information, pricing, and promotion indicators.
-
-## 🧠 Methodology
-
-### 1. Data Preparation
-
-- Merge transactional and lookup datasets
-- Check missing values
-- Check duplicates
-- Validate price values
-- Investigate unusual price/base-price relationships
-
-### 2. Exploratory Data Analysis
-
-Analyze:
-
-- Demand distribution
-- Price distribution
-- Promotion effects
-- Category-level demand
-- Price-demand relationships
-- Revenue patterns
-
-### 3. Feature Engineering
-
-Create forecasting features including:
-
-- Lagged demand
-- Rolling demand statistics
-- Price-related features
-- Promotion indicators
-- Category/cuisine/center features
-- Time-based features
-
-### 4. Demand Forecasting
-
-Models evaluated:
-
-- Naive last-week baseline
-- Ridge regression
-- XGBoost
-
-A time-based validation strategy is used so future information does not leak into model training.
-
-### 5. Price Elasticity
-
-Estimate controlled log-log price elasticity while accounting for observed differences across:
-
-- Meal
-- Fulfilment center
-- Promotion indicators
-
-Elasticity results are interpreted as observational/model-based relationships rather than causal experimental effects.
-
-### 6. Dynamic Pricing Optimization
-
-The optimizer:
-
-- Uses controlled price elasticity
-- Searches candidate prices within historical price ranges
-- Applies a maximum ±20% price-change constraint
-- Estimates demand and expected revenue under each scenario
-
-### 7. Pricing Scenario Evaluation
-
-Pricing recommendations are evaluated on a historical holdout period using forecasted demand rather than assuming the observed future demand would remain unchanged.
-
-## 📈 Key Results
-
-### Demand Forecasting
-
-| Model | MAE |
+| Metric | Result |
 |---|---:|
-| Naive baseline | 99.1 |
-| Ridge regression | 113.3 |
-| XGBoost | 77.4 |
+| XGBoost MAE | 77.4 orders |
+| Naive baseline MAE | 99.1 orders |
+| Ridge baseline MAE | 113.3 orders |
+| XGBoost improvement vs naive | 21.9% |
+| XGBoost improvement vs Ridge | 31.7% |
+| Notebook pricing scenario improvement | 10.14% |
 
-XGBoost achieved:
+The pricing percentage is a **model-based holdout scenario estimate**, not a guaranteed causal revenue increase.
 
-- **21.9% lower MAE than the naive baseline**
-- **31.7% lower MAE than the Ridge baseline**
-
-### Pricing Optimization
-
-The constrained pricing scenario estimated approximately:
-
-**10.14% revenue improvement**
-
-under the modeled pricing scenario on the historical holdout period.
-
-> This is a model-based scenario estimate, not a guaranteed causal revenue increase.
-
-## 💡 Business Insights
-
-The project demonstrates how a retailer can combine:
-
-**Demand Forecasting → Price Sensitivity → Pricing Optimization**
-
-to support data-driven revenue decisions.
-
-## ⚠️ Limitations
-
-- Pricing relationships are estimated from observational data rather than randomized experiments.
-- Unobserved factors may influence customer demand.
-- The project optimizes expected revenue rather than profit because product-level cost/margin data is unavailable.
-- Real-world deployment would also require competitor pricing, inventory constraints, operational constraints, and customer behavior monitoring.
-
-## 🛠️ Technologies
-
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-learn
-- XGBoost
-- Statsmodels
-- Jupyter Notebook
-
-## 📁 Project Structure
+## Repository Structure
 
 ```text
 retail-demand-dynamic-pricing/
-│
-├── README.md
-├── retail_demand_forecasting_dynamic_pricing.ipynb
+├── app.py
+├── retail_demand_dynamic_pricing.ipynb
 ├── requirements.txt
 ├── .gitignore
+├── README.md
+│
 ├── data/
+│   ├── demo_reference.csv
 │   └── README.md
+│
+├── models/
+│   ├── demand_xgb.json
+│   ├── pricing_parameters.csv
+│   ├── metadata.json
+│   └── qa_metrics.json
+│
 └── images/
-    ├── demand_forecast.png
-    ├── price_elasticity.png
-    └── pricing_optimization.png
+```
+
+## Pricing Methodology
+
+The interactive application uses controlled category-level price elasticity exported from the finalized notebook. The pricing scenario combines that elasticity with forecasted demand. The theoretical category optimum is bounded by training-period historical prices, then the interactive/holdout stage applies the finalized notebook's maximum ±20% change from the current observed price.
+
+## Limitations
+
+Pricing estimates come from observational historical data rather than a randomized pricing experiment. Unobserved factors may still affect demand. The project optimizes expected revenue rather than profit because product-level costs and margins are unavailable.
+
+## Technology
+
+Python · Pandas · NumPy · XGBoost · Plotly · Streamlit · Statsmodels · Scikit-learn · Jupyter
+
+## Demo Behavior
+
+The top result cards report the model forecast and the final constrained recommendation. The lower **What-if Price Simulation** is an interactive scenario explorer and may show a different value when the slider is moved. This distinction is intentional: recommendation and what-if analysis are separate outputs.
+
+## Interactive Demo
+
+The application separates the **recommended-price scenario** (top cards) from the **what-if price simulation** (slider section). The default slider value is the optimizer recommendation; moving it lets the presenter test alternative feasible prices without changing the underlying recommendation.
