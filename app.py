@@ -22,7 +22,7 @@ BUSINESS_CONSTRAINT = 0.20
 
 st.set_page_config(
     page_title="Retail Demand & Dynamic Pricing",
-    page_icon="📊",
+    page_icon=" ",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -237,7 +237,7 @@ homepage_featured = st.sidebar.checkbox(
 )
 
 run = st.sidebar.button(
-    "🔮 Predict & Optimize",
+    " Predict & Optimize",
     type="primary",
     use_container_width=True,
 )
@@ -255,12 +255,12 @@ committed = st.session_state.get("committed_scenario")
 # ---------------------------
 # Main content
 # ---------------------------
-st.title("📊 Retail Demand Forecasting & Dynamic Pricing Optimization")
+st.title(" Retail Demand Forecasting & Dynamic Pricing Optimization")
 st.caption(
     "Interactive demonstration of the finalized demand-forecasting and controlled pricing pipeline."
 )
 
-with st.expander("ℹ️ How the demo works", expanded=False):
+with st.expander(" How the demo works", expanded=False):
     st.write(
         "Select a meal and fulfilment center, enter a scenario price and promotion settings, "
         "then click **Predict & Optimize**. The app forecasts demand and evaluates a constrained "
@@ -271,7 +271,7 @@ if committed is None:
     st.info("Set your scenario inputs in the sidebar and click **Predict & Optimize** to run the model.")
 
     perf = metadata["performance"]
-    st.subheader("📌 Project Benchmark")
+    st.subheader(" Project Benchmark")
     c1, c2, c3 = st.columns(3)
     c1.metric("XGBoost MAE", f"{perf['notebook_xgboost_mae']:.1f} orders")
     c2.metric("Naive MAE", f"{perf['naive_mae']:.1f} orders")
@@ -340,7 +340,7 @@ revenue_change_pct = (
 # ---------------------------
 # Top-line result
 # ---------------------------
-st.subheader("🎯 Demand Forecast & Pricing Recommendation")
+st.subheader(" Demand Forecast & Pricing Recommendation")
 
 m1, m2, m3, m4 = st.columns(4)
 with m1:
@@ -372,7 +372,7 @@ with left:
     )
 
 with right:
-    st.markdown("### 🔗 Pricing Logic")
+    st.markdown("###  Pricing Logic")
     st.write(f"**Controlled price elasticity:** {elasticity:.3f}")
     st.write(f"**Elasticity significance:** {p_value_label(price_params['p_value'])}")
     st.write(f"**Elasticity observations:** {int(price_params['n_obs']):,}")
@@ -388,7 +388,7 @@ with right:
 # ---------------------------
 # Interactive simulation
 # ---------------------------
-st.markdown("### 💰 What-if Price Simulation")
+st.markdown("###  What-if Price Simulation")
 st.caption(
     f"Move the slider to test alternative prices within {money(lower_price)}–{money(upper_price)}. "
     "The recommended price is calculated first; this section lets you test what-if scenarios "
@@ -483,7 +483,7 @@ st.info(
     "observational data. It is not a guarantee of causal revenue improvement."
 )
 
-with st.expander("📌 Model Performance & Project Context"):
+with st.expander(" Model Performance & Project Context"):
     perf = metadata["performance"]
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Notebook XGBoost MAE", f"{perf['notebook_xgboost_mae']:.1f}")
